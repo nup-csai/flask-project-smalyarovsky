@@ -23,7 +23,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    steps:
     - uses: actions/checkout@v4
-    - name: Tests that host is online
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile -t app
+
+    steps:
+    - name: Test that host is online
       run: docker exec my_app_container python client.py
