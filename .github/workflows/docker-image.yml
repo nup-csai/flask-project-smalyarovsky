@@ -21,6 +21,7 @@ jobs:
       run: docker run -d -p 8080:8080 --name my_app_container -t app
 
   test:
+
     runs-on: ubuntu-latest
 
     - uses: actions/checkout@v4
