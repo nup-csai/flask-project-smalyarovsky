@@ -18,16 +18,7 @@ jobs:
       run: docker build . --file Dockerfile -t app
 
     - name: Run Docker container
-      run: docker run -d -p 8080:8080 --name my_app_container -t app
-
-  test:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile -t app
+        run: docker run -d -p 8080:8080 --name my_app_container -t app
 
     - name: Test that host is online
       run: docker exec my_app_container python client.py
