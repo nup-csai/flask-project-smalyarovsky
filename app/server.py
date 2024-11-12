@@ -44,7 +44,7 @@ def list():
     return jsonify(message)
 
 
-@app.route("/add")
+@app.route("/add", methods=["POST"])
 def add():
     supply = dict()
     try:
@@ -70,7 +70,6 @@ def add():
         "status": 200,
         "message": "OK"
     }
+    supply_examples.append(supply)
     return jsonify(message)
 
-
-app.run(debug=True, port=8080)
