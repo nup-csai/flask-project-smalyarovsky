@@ -12,4 +12,4 @@ def check_root_url(url):
         exit(1)
 
 
-check_root_url("http://localhost:8080")
+check_root_url("http://localhost:8080/list")
