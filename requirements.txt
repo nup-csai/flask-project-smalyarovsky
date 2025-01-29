@@ -1,4 +1,6 @@
-Flask
+Flask~=3.0.3
 requests
-pytest
+pytest~=8.3.4
 flask_sqlalchemy
+flask-login
+werkzeug~=3.0.4

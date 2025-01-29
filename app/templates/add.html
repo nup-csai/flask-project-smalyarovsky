@@ -1,0 +1,147 @@
+{% extends 'layout.html' %}
+
+{% block title %} <title>Add Food</title> {% endblock %}
+
+{% block style %}
+<style>
+    body {
+        font-family: 'Times New Roman', serif;
+        margin: 0;
+        padding: 0;
+        background-color: white;
+    }
+
+    .add-food-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .add-food-container h1 {
+        font-size: 24px;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-group label {
+        font-size: 16px;
+        color: #666;
+        font-weight: 500;
+    }
+
+    .form-group input, .form-group select {
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fafafa;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+        border-color: #888;
+        outline: none;
+        background-color: #fff;
+    }
+
+    .form-group input[type="submit"] {
+        background-color: #ccc;
+        color: #333;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-group input[type="submit"]:hover {
+        background-color: #bbb;
+    }
+
+    .back-button {
+        display: inline-block;
+        background-color: #ccc;
+        padding: 12px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 20px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+        background-color: #bbb;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="add-food-container">
+        <h1>Add a New Food Item</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">Food Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="meal">Is this a meal?</label>
+                <select id="meal" name="meal" required>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price (€):</label>
+                <input type="number" step="0.01" id="price" name="price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="calories">Calories:</label>
+                <input type="number" id="calories" name="calories" required>
+            </div>
+
+            <div class="form-group">
+                <label for="proteins">Proteins (g):</label>
+                <input type="number" id="proteins" name="proteins" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fats">Fats (g):</label>
+                <input type="number" id="fats" name="fats" required>
+            </div>
+
+            <div class="form-group">
+                <label for="time">Date:</label>
+                <input type="date" id="time" name="time" required>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Add Food">
+            </div>
+        </form>
+
+        <a href="{{ url_for('home') }}" class="back-button">Back to Home</a>
+    </div>
+{% endblock %}

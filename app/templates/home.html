@@ -1,0 +1,175 @@
+{% extends 'layout.html' %}
+{% block title %} <title>Home</title> {% endblock %}
+
+{% block style %}
+<style>
+    body {
+        font-family: 'Times New Roman', serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .top-section {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .welcome-message {
+        font-size: 16px;
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .stat-block {
+        text-align: center;
+        font-size: 12px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        background-color: silver;
+    }
+
+    .add-button {
+        background-color: #ff5733;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .add-button:hover {
+        background-color: #cc4626;
+    }
+
+    .bottom-section {
+        display: flex;
+        height: calc(100vh - 120px);
+        margin-top: 20px;
+    }
+
+    .snacks-section,
+    .meals-section {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+    }
+
+    .section-title {
+        font-size: 22px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .food-item {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .food-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .food-item-date {
+        font-size: 12px;
+        color: #777;
+        margin-top: 5px;
+    }
+
+    .nutrition-info {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="top-section">
+        <div class="welcome-message">
+            <h1>Hello, {{ current_user.username }}!</h1>
+        </div>
+        <div class="stat-block">
+            <h1>Daily spending: €{{ "%.2f"|format(daily_spend) }}</h1>
+        </div>
+        <div class="stat-block">
+            <h1>Daily calories: {{ "%.0f"|format(daily_calories) }}kcal</h1>
+        </div>
+        <div class="stat-block">
+            <h1>Daily proteins: {{ "%.0f"|format(daily_proteins) }}g</h1>
+        </div>
+        <div class="stat-block">
+            <h1>Daily fats: {{ "%.0f"|format(daily_fats) }}g</h1>
+        </div>
+        <div>
+            <a href={{ url_for('add') }}>
+                <button class="add-button">+</button>
+            </a>
+        </div>
+        <a href="{{ url_for('logout') }}">
+            <button class="logout-button">Logout</button>
+        </a>
+    </div>
+
+    <div class="bottom-section">
+        <div class="snacks-section">
+            <div>
+                <h2 class="section-title">My Snacks</h2>
+            </div>
+            <div>
+                {% for snack in snacks %}
+                    <div class="food-item">
+                        <div class="food-item-header">
+                            <strong>{{ snack.name }}</strong>
+                            <span class="food-item-date">{{ datetime.fromtimestamp(snack.time).strftime('%d.%m.%Y') }}</span>
+                        </div>
+                        <div class="nutrition-info">
+                            Price: €{{ snack.price or 0 }} | Calories: {{ snack.calories or 0 }} | Proteins: {{ snack.proteins or 0 }}g | Fats: {{ snack.fats or 0 }}g
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="meals-section">
+            <div>
+                <h2 class="section-title">My Meals</h2>
+            </div>
+            <div>
+                {% for meal in meals %}
+                    <div class="food-item">
+                        <div class="food-item-header">
+                            <strong>{{ meal.name }}</strong>
+                            <span class="food-item-date">{{ datetime.fromtimestamp(meal.time).strftime('%d.%m.%Y') }}</span>
+                        </div>
+                        <div class="nutrition-info">
+                            Price: €{{ meal.price or 0 }} | Calories: {{ meal.calories or 0 }} | Proteins: {{ meal.proteins or 0 }}g | Fats: {{ meal.fats or 0 }}g
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
