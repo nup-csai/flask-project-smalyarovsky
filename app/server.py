@@ -5,7 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
     current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from logger import Logger
+from app.logger import Logger
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)

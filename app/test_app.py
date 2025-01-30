@@ -1,5 +1,6 @@
 import pytest
 from app.server import app, db, User
+
 from werkzeug.security import generate_password_hash
 
 

@@ -33,3 +33,6 @@ The stable version of the app is stored in the master branch. unstable branch is
 GitHub actions is used for building and testing. Railway is used for CD. Link to the railway:
 https://flask-project-smalyarovsky-production.up.railway.app/
 
+## Logs
+
+Logger Singleton class is used for logging. The logs can be found in app_<date>.log file. 
