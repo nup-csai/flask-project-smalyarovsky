@@ -26,4 +26,10 @@ Basic features:
 
 ## Git
 
-master branch stores the latest version; stable branch is used for the stable version of the app
+The stable version of the app is stored in the master branch. unstable branch is for testing new features.
+
+## CI/CD
+
+GitHub actions is used for building and testing. Railway is used for CD. Link to the railway:
+https://flask-project-smalyarovsky-production.up.railway.app/
+

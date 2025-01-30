@@ -5,6 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
     current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from logger import Logger
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -16,6 +17,8 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
+
+logger = Logger()
 
 
 class User(UserMixin, db.Model):
@@ -52,8 +55,10 @@ def login():
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
+            logger.info(f'Succesful login by {username}')
             login_user(user)
             return redirect(url_for('home'))
+        logger.info(f'Attempt to login with invalid credentials by {username}')
         flash("Invalid credentials")
         return redirect(url_for('login'))
     return render_template('login.html')
@@ -66,8 +71,10 @@ def register():
         password = request.form['password']
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
+            logger.info(f'Attempt to register with existing username {username}')
             flash('Username is taken', 'danger')
             return redirect(url_for('register'))
+        logger.info(f'Successful registration of {username}')
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
@@ -79,6 +86,7 @@ def register():
 @app.route('/logout')
 @login_required
 def logout():
+    logger.info(f'{current_user.username} logged out')
     logout_user()
     return redirect(url_for('login'))
 
@@ -92,6 +100,7 @@ def root():
 @app.route('/home')
 @login_required
 def home():
+    logger.info(f'{current_user.username} accessed the home route')
     foods = Food.query.filter_by(user_id=current_user.id)
     snacks = foods.filter_by(meal=False).order_by(Food.time.desc()).all()
     meals = foods.filter_by(meal=True).order_by(Food.time.desc()).all()
@@ -134,6 +143,7 @@ def home():
 @login_required
 def add():
     if request.method == 'POST':
+        logger.info(f'{current_user.username} added a meal/snack')
         name = request.form['name']
         meal = request.form['meal'] == 'True'
         price = request.form.get('price', type=float)
