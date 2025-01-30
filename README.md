@@ -1,6 +1,8 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/d2zEkl7e)
 # Food Tracker
 
+#[Screencast link](https://youtu.be/9jqmuFz4e9g)
+
 ## Solution for tracking your meals and snacks and calculating daily spending on food and daily calorie intake
 
 Allows to input your meals and snacks with their data. Idea behind separation of snacks and meals is to help you track how much are you snacking during the day and help you transform you dietary habits to be healthier.
